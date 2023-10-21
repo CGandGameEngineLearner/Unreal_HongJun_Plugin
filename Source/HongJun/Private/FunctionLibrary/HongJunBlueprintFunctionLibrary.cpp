@@ -9,10 +9,14 @@
 
 void UHongJunBlueprintFunctionLibrary::SetVehiclePoseByAirSimNedPose(FString VehicleName,FVector NewLocation,FRotator NewRotator,bool IgnoreCollision)
 {
+	// NewRotator=FRotator(NewRotator.Pitch*PI/180,NewRotator.Yaw*PI/180,NewRotator.Roll*PI/180);
+	
 	ASimModeBase* SimModeBase=ASimModeBase::getSimMode();
 
 	std::string S_VehicleName(TCHAR_TO_UTF8(*VehicleName));
 	PawnSimApi* VehicleSimApi=SimModeBase->getVehicleSimApi(S_VehicleName);
+
+	
 	
 	msr::airlib::Pose NewPose=MakePose(NewLocation,NewRotator);
 	SimModeBase->getGlobalNedTransform().fromGlobalNed(NewPose);
@@ -32,8 +36,10 @@ FTransform UHongJunBlueprintFunctionLibrary::UnrealTransformToAirSimNedTransform
 	FTransform RelativeTransform=UnrealTransform.GetRelativeTransform(NedOriginTransform);
 	FVector NedOriginLocation(RelativeTransform.GetLocation().X/100,RelativeTransform.GetLocation().Y/100,-RelativeTransform.GetLocation().Z/100);
 	RelativeTransform.SetLocation(NedOriginLocation);
-	FRotator NedOriginRotator(RelativeTransform.GetRotation().Euler().X,RelativeTransform.GetRotation().Euler().Y,-RelativeTransform.GetRotation().Euler().Z);
-	RelativeTransform.SetRotation(NedOriginRotator.Quaternion());
+
+	
+	// FRotator NedOriginRotator(RelativeTransform.GetRotation().Rotator().Pitch,RelativeTransform.GetRotation().Rotator().Yaw,RelativeTransform.GetRotation().Rotator().Roll);
+	// RelativeTransform.SetRotation(NedOriginRotator.Quaternion());
 	return RelativeTransform;
 }
 

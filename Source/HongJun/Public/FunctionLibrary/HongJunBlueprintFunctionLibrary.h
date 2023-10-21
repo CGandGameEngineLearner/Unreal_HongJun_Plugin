@@ -21,10 +21,10 @@ class HONGJUN_API UHongJunBlueprintFunctionLibrary : public UBlueprintFunctionLi
 public:
 
 	/**
-	* 设置AirSim载具的姿态，注意这里设置的是在AirSim的坐标系下的状态
+	* 设置AirSim载具的姿态，注意这里设置的是在AirSim的坐标系下的状态 注意使用弧度制设置旋转
 	* @param VehicleName  目标载具名，必须是ASCII编码
 	* @param NewLocation 坐标
-	* @param NewRotator 旋转
+	* @param NewRotator 旋转 注意这里应该用弧度制！
 	* @param IgnoreCollision 是否忽略碰撞
 	*/	
 	UFUNCTION(BlueprintCallable,Category="AirSim | Vehicle API")

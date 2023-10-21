@@ -2,10 +2,9 @@
 
 // include AirSim
 
-
-#include "AirBlueprintLib.h"
-#include "AirSimGameMode.h"
 #include "FunctionLibrary/HongJunBlueprintFunctionLibrary.h"
+
+
 
 void UHongJunBlueprintFunctionLibrary::SetVehiclePoseByAirSimNedPose(FString VehicleName,FVector NewLocation,FRotator NewRotator,bool IgnoreCollision)
 {
@@ -28,7 +27,7 @@ void UHongJunBlueprintFunctionLibrary::SetVehiclePoseByAirSimNedPose(FString Veh
 FTransform UHongJunBlueprintFunctionLibrary::GetNedOriginTransform()
 {
 	ASimModeBase* SimModeBase=ASimModeBase::getSimMode();
-	return std::move(SimModeBase->getGlobalNedTransform().getGlobalTransform());
+	return SimModeBase->getGlobalNedTransform().getGlobalTransform();
 }
 
 FTransform UHongJunBlueprintFunctionLibrary::UnrealTransformToAirSimNedTransform(FTransform NedOriginTransform,FTransform UnrealTransform)
@@ -57,7 +56,7 @@ msr::airlib::Vector3r UHongJunBlueprintFunctionLibrary::FVectorToAirVector3r(FVe
 {
 	msr::airlib::Vector3r AirVector3r;
 	AirVector3r<<FVector.X,FVector.Y,FVector.Z;
-	return std::move(AirVector3r);
+	return AirVector3r;
 }
 
 msr::airlib::Pose UHongJunBlueprintFunctionLibrary::MakePose(FVector Location, FRotator Rotator)
@@ -67,5 +66,5 @@ msr::airlib::Pose UHongJunBlueprintFunctionLibrary::MakePose(FVector Location, F
 	NewPose.position=UHongJunBlueprintFunctionLibrary::FVectorToAirVector3r(Location);
 	NewPose.orientation= msr::airlib::VectorMath::toQuaternion(Rotator.Pitch,Rotator.Roll,Rotator.Yaw);
 
-	return std::move(NewPose);
+	return NewPose;
 }
